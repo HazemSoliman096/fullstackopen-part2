@@ -1,2 +1,4 @@
 # fullstackopen-part2
-part 2 from fullstack open.
+
+- courseinfo:
+  1. 2.1: Course information step6.
