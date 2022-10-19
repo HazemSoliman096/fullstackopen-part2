@@ -12,3 +12,4 @@
   3. 2.8: The Phonebook Step3.
   4. 2.9*: The Phonebook Step4.
   5. 2.10: The Phonebook Step5.
+  6. 2.11: The Phonebook Step6.
