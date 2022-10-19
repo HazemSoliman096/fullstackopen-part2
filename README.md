@@ -6,3 +6,9 @@
   3. 2.3*: Course information step8.
   4. 2.4: Course information step9.
   5. 2.5: separate module.
+- The Phonebook
+  1. 2.6: The Phonebook Step1.
+  2. 2.7: The Phonebook Step2.
+  3. 2.8: The Phonebook Step3.
+  4. 2.9*: The Phonebook Step4.
+  5. 2.10: The Phonebook Step5.
