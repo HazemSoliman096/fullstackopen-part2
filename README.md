@@ -13,6 +13,8 @@
   4. 2.9*: The Phonebook Step4.
   5. 2.10: The Phonebook Step5.
   6. 2.11: The Phonebook Step6.
+  7. 2.15: Phonebook step7.
+  8. 2.16: Phonebook step8.
 - countries:
   1. 2.12* Data for countries, step1.
   2. 2.13* Data for countries, step2.

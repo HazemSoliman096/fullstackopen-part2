@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { Filter, Persons, PersonForm } from './Persons';
+import phoneService from './services/phoneServices';
 
 const App = () => {
 
@@ -11,8 +12,7 @@ const App = () => {
   const [searchTerm, setsearchTerm] = useState('');
 
   useEffect(() => {
-    axios
-        .get('http://localhost:3001/persons')
+        phoneService.getAll()
         .then(Response => setPersons(Response.data));
   }, []);
 
@@ -35,10 +35,9 @@ const App = () => {
       number: newPhone
     };
 
-    axios
-        .post('http://localhost:3001/persons', person)
-        .then(Response => setPersons(persons.concat(Response.data)))
-        .catch(console.log(`Can not add Person ${person.name}`));
+    phoneService.create(person)
+      .then(Response => setPersons(persons.concat(Response.data)))
+      .catch(console.log(`Can not add Person ${person.name}`));
 
     setNewName('');
     setNewPhone('');
