@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { Filter, Persons, PersonForm } from './Persons';
-import phoneService from './services/phoneServices';
+import { Notification } from './Notification';
+import phoneService from '../services/phoneServices';
 
 const App = () => {
 
@@ -10,6 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [searchTerm, setsearchTerm] = useState('');
+  const [message, setMessage] = useState(null);
+  const [style, setStyle] = useState('');
 
   useEffect(() => {
         phoneService.getAll()
@@ -35,18 +37,43 @@ const App = () => {
       number: newPhone
     };
 
+    let oldPerson = persons.filter(p => p.name === person.name)[0];
     if(persons.filter(p => p.name === person.name).length === 0)
     {
       phoneService.create(person)
-        .then(Response => setPersons(persons.concat(Response.data)))
-        .catch(console.log(`Can not add Person ${person.name}`));
+        .then(Response => {
+          setPersons(persons.concat(Response.data));
+          setMessage(`Added ${person.name}`)
+          setStyle('success');
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+        })
+        .catch(error => {
+          setMessage(`Can not add Person ${person.name}`);
+          setStyle('error');
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+        });
     } else {
       if (window.confirm(`${person.name} is already added to phonebook, replace the old number with new one.`)) {
-        let oldPerson = persons.filter(p => p.name === person.name)[0];
-        console.log(oldPerson);
         phoneService.updatePerson(oldPerson.id, person)
-         .then(Response => setPersons(persons.map(p => p.id !== oldPerson.id ? p : Response.data)))
-         .catch(console.log(`Can not update Person ${oldPerson.name}`));
+         .then(Response => {
+          setPersons(persons.map(p => p.id !== oldPerson.id ? p : Response.data));
+          setMessage(`Updated ${person.name}`);
+          setStyle('success');
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+         })
+         .catch(error => {
+          setMessage(`Can not update Person ${oldPerson.name}`);
+          setStyle('error');
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+         });
       }
     }
 
@@ -66,6 +93,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification msg={message} style={style} />
       <Filter value={searchTerm} handler={handlesearchTerm} />
       <Header title={'add a new'} />
       <PersonForm name={newName} phone={newPhone} handleName={handleName} handlePhone={handlePhone} action={AddPhone} />
