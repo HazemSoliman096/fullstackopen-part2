@@ -7,9 +7,15 @@ const Filter = ({ value, handler }) => {
   );
 }
 
-const Persons = ({ records }) => { return records.map(p => <Person record={p} />) }
+const Persons = ({ records, delHandler }) => { return records.map(p => <Person record={p} handler={delHandler} />) }
 
-const Person = ({ record }) => <p>{record.name} {record.number}</p>
+const Person = ({ record, handler }) => {
+  return (
+    <div>
+      {record.name} {record.number} <button onClick={() => handler(record.id)}>Delete</button>
+    </div>
+  );
+}
 
 const PersonForm = ({ name, phone, handleName, handlePhone, action }) => {
   return (
