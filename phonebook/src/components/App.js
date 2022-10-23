@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
         phoneService.getAll()
         .then(Response => setPersons(Response.data));
-  }, []);
+  }, [persons]);
 
   const handleName = (event) => {
     setNewName(event.target.value);
