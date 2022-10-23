@@ -10,4 +10,9 @@ const create = (data) => {
   return axios.post(baseUrl, data);
 }
 
-export default { getAll, create }
+const deletePerson = (id) => {
+  console.log(id);
+  return axios.delete(`${baseUrl}/${id}`);
+}
+
+export default { getAll, create, deletePerson }

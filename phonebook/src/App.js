@@ -43,6 +43,12 @@ const App = () => {
     setNewPhone('');
   }
 
+  const handleDelete = (id) => {
+    if (window.confirm("Do you really want to Delete This Person?")) {
+      phoneService.deletePerson(id);
+    }
+  }
+
   const filterdPersons = searchTerm === '' ? persons : persons.filter(P => P.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
@@ -52,7 +58,7 @@ const App = () => {
       <Header title={'add a new'} />
       <PersonForm name={newName} phone={newPhone} handleName={handleName} handlePhone={handlePhone} action={AddPhone} />
       <Header title={'Numbers'} />
-      <Persons records={filterdPersons} />
+      <Persons records={filterdPersons} delHandler={handleDelete} />
     </div>
   )
 }
