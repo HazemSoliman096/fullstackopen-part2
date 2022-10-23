@@ -34,7 +34,12 @@ const App = () => {
       name: newName,
       number: newPhone
     };
-    setPersons(persons.concat(person));
+
+    axios
+        .post('http://localhost:3001/persons', person)
+        .then(Response => setPersons(persons.concat(Response.data)))
+        .catch(console.log(`Can not add Person ${person.name}`));
+
     setNewName('');
     setNewPhone('');
   }
