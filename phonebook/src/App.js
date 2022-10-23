@@ -35,9 +35,21 @@ const App = () => {
       number: newPhone
     };
 
-    phoneService.create(person)
-      .then(Response => setPersons(persons.concat(Response.data)))
-      .catch(console.log(`Can not add Person ${person.name}`));
+    if(persons.filter(p => p.name === person.name).length === 0)
+    {
+      phoneService.create(person)
+        .then(Response => setPersons(persons.concat(Response.data)))
+        .catch(console.log(`Can not add Person ${person.name}`));
+    } else {
+      if (window.confirm(`${person.name} is already added to phonebook, replace the old number with new one.`)) {
+        let oldPerson = persons.filter(p => p.name === person.name)[0];
+        console.log(oldPerson);
+        phoneService.updatePerson(oldPerson.id, person)
+         .then(Response => setPersons(persons.map(p => p.id !== oldPerson.id ? p : Response.data)))
+         .catch(console.log(`Can not update Person ${oldPerson.name}`));
+      }
+    }
+
 
     setNewName('');
     setNewPhone('');
