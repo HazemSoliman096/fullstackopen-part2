@@ -3,19 +3,14 @@ import { useEffect, useState } from "react";
 
 const Country = ({ country }) => {
 
-  const [weatherData, setweatherData] = useState(null);
+  const [weatherData, setweatherData] = useState({});
+  const key = process.env.REACT_APP_API_KEY;
 
-  console.log('start');
   useEffect(() => {
-    console.log('here');
-    const key = process.env.REACT_APP_API_KEY;
-    const lat = country.latlng[0];
-    const lon = country.latlng[1];
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`;
     axios
-      .get(url)
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${country.latlng[0]}&lon=${country.latlng[1]}&appid=${key}`)
       .then(Response => setweatherData(Response.data));
-  }, []);
+  }, [country, key]);
 
   return (
     <div>
@@ -50,14 +45,14 @@ const Countries = ({ countries, handler }) => {
 
 
 const Weather = ({ data, name }) => {
-  const src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
   return (
-    <div>
-      <h2>Weather in {name}</h2>
-      <p>temperature {(5.0 / 9.0) * (data.main.temp - 32)} Celcius</p>
-      <img src={src} alt='Weather icon' />
-      <p>wind {data.wind.speed} m/s</p>
-    </div>
+    Object.keys(data).length <= 0 ? <></>
+      :<div>
+        <h2>Weather in {name}</h2>
+        <p>temperature {(5.0 / 9.0) * (data.main.temp - 32)} Celcius</p>
+        <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt='Weather icon' />
+        <p>wind {data.wind.speed} m/s</p>
+      </div>
   )
 }
 
